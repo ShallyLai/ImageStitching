@@ -31,10 +31,12 @@ def harris_corner_detector(image, ksize=3, k=0.04, threshold=0.01):
     rMax = R.max() * threshold
 
     # Reduce the corner to find corner locations, window = 5
+    features = []
     for i in range(10, height - 10):
         for j in range(10, width - 10):
             if R[i, j] > rMax and R[i, j] == np.max(R[(i - 2):(i + 3), (j - 2):(j + 3)]):
                 corner[i, j] = 255
+                features.append((i,j))
 
-    return corner, R
+    return corner, R, dx, dy, dx2, dy2, features
 
