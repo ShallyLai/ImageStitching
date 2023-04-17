@@ -7,7 +7,8 @@ import os
 from utils import read_files, get_focals, plot_orientation
 from FeatureDection import harris_corner_detector
 from Cylindrical import cylinder_warp
-from feature_desciption import assign_orientation, feature_description
+from feature_description import assign_orientation, feature_description
+from feature_matching import feature_matching
 
 dir_name = "./parrington"
 
@@ -31,15 +32,27 @@ for i in tqdm(range(len(images))):
 print('Feature Detection')
 hcd = []
 R = []
-#for i in tqdm(range(len(warp_images))):
-for i in [0]: #test
+image_features = []
+descriptions = []
+for i in tqdm(range(len(warp_images))):
     h, r, dx, dy, dx2, dy2, features = harris_corner_detector(warp_images[i], ksize=3, k=0.04, threshold=0.01)
     m, theta, theta_bin = assign_orientation(dx, dy, dx2, dy2)
 
-    plot_orientation(dx, dy, m, theta)#
+    # Plot orientation
+    if i == 0:
+        plot_orientation(dx, dy, m, theta)
     
     feature_vectors = feature_description(features, m, theta_bin)
-
+    
+    descriptions.append(feature_vectors)
+    image_features.append(features)
     hcd.append(h)
     R.append(r)
     cv2.imwrite(tmp_dir + '/harris'+str(i)+'.png', hcd[i])
+
+for i in tqdm((range(len(warp_images)-1))):
+    img1_des = descriptions[i]
+    img2_des = descriptions[i+1]
+    img1_fea = image_features[i]
+    img2_fea = image_features[i+1]
+    print( feature_matching(img1_des, img2_des, img1_fea, img2_fea) )
