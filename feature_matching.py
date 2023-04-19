@@ -8,7 +8,7 @@ def ransac(matches, k=500, t=3):
     for i in range(k):
         sample_i = np.random.randint(0, len(matches)-1)
         shift = matches[sample_i][0] - matches[sample_i][1]
-        d = matches[:,0] - (matches[:,1] + shift)
+        d = matches[:, 0] - (matches[:, 1] + shift)
         inliers = np.sum( np.sqrt(np.sum(d**2, 1)) < t )
         if inliers > inlier_max:
             inlier_max = inliers
@@ -31,8 +31,8 @@ def feature_matching(d1, d2, f1, f2):
         closest_d = distances[i, row[0]]
         second_closest_d = distances[i, row[1]]
         if closest_d / (second_closest_d+1e-8) < 0.8:
-            match  = [ f1[i], f2[row[0]] ]
+            match  = [f1[i], f2[row[0]]]
             matches.append(match)
     
-    return( ransac(matches) )
+    return ransac(matches) 
 

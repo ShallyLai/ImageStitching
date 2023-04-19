@@ -23,9 +23,9 @@ def get_focals(dir_name):
                 focals.append(float(all[i]))
     return focals
 
-# Plot Orientation
+# Plot orientation
 def plot_orientation(dx, dy, m, theta):
-    fig, ax = plt.subplots(2,2,figsize=(10,10))
+    fig, ax = plt.subplots(2, 2, figsize=(10, 10))
     ax[0,0].set_title('dx')
     ax[0,0].imshow(dx)
     ax[0,0].axis('off')
@@ -43,3 +43,27 @@ def plot_orientation(dx, dy, m, theta):
     ax[1,1].axis('off')
     
     fig.savefig('orientation.png')
+
+# Plot features
+def plot_features(im, R, features, corner):
+    h, w, c = im.shape
+    
+    feature_points = np.copy(im)
+    for i in range(len(features)):
+        cv2.circle(feature_points, (features[i][1], features[i][0]), radius=1, color=[255, 0, 0], thickness=1, lineType=1) 
+        
+    fig, ax = plt.subplots(2, 2, figsize=(15, 15))
+    ax[0, 0].set_title('Original')
+    ax[0, 0].imshow(im)
+
+    ax[0, 1].set_title('Feature Points')
+    ax[0, 1].imshow(feature_points); 
+
+    ax[1, 0].set_title('R')
+    ax[1, 0].imshow(np.log(R), cmap='jet')
+
+    ax[1, 1].set_title('Corner')
+    ax[1, 1].imshow(corner, cmap='gist_gray')
+    
+    plt.savefig('features.png')
+
