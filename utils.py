@@ -62,7 +62,7 @@ def plot_features(im, R, features, corner):
     ax[1, 0].set_title('R')
     ax[1, 0].imshow(np.log(R), cmap='jet')
 
-    ax[1, 1].set_title('Corner')
+    ax[1, 1].set_title('Corners')
     ax[1, 1].imshow(corner, cmap='gist_gray')
     
     plt.savefig('features.png')

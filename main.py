@@ -29,7 +29,7 @@ for i in tqdm(range(len(images))):
     # cv2.imwrite(tmp_dir + '/warp'+str(i)+'.png', warp_images[i])
 
 
-print('Feature Detection')
+print('Feature Detection & Feature Description')
 image_corners = []
 R = []
 image_features = []
@@ -51,10 +51,10 @@ for i in tqdm(range(len(warp_images))):
     R.append(r)
     # cv2.imwrite(tmp_dir + '/harris'+str(i)+'.png', image_corners[i])
 
-print('Feature Description')
+print("Feature Matching")
 for i in tqdm((range(len(warp_images) - 1))):
     img1_des = descriptions[i]
     img2_des = descriptions[i + 1]
     img1_fea = image_features[i]
     img2_fea = image_features[i + 1]
-    # print(feature_matching(img1_des, img2_des, img1_fea, img2_fea))
+    print(feature_matching(img1_des, img2_des, img1_fea, img2_fea))
