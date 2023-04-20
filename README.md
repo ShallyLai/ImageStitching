@@ -1,5 +1,16 @@
 # Image Stitching
 
+#### Cylinder Warping
+We took an input image and a focal length as arguments and performed cylinder warping on the input image. The output is a new image that has undergone a transformation in which the original image is projected onto a cylindrical surface. 
+
+The code iterates over each pixel in the output image, calculates the corresponding point in the input image, and interpolates the pixel value at that point. The resulting output image has corrected distortion, and the image's visual quality is enhanced.
+
+
+#### Feature Detection
+We achieved the Harris Corner Detector algorithm that the instructor mentioned in class. 
+
+In the function, the image is first converted to grayscale. Then, the image gradients in both the x and y directions are computed. The products of gradients at each pixel are computed using simple arithmetic operations. Next, the sums of products of gradients for each pixel are computed to obtain the Harris Corner Detector response R. Finally, the locations of the detected corners are found by iterating through the image and checking if the response R is greater than the threshold value and is the maximum value in a 5x5 window. The detected corner locations are then returned along with other computed variables.
+
 
 #### Feature Description
 We implemented the feature description method in SIFT algorithm.

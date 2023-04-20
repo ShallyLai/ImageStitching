@@ -13,9 +13,9 @@ from stitching import image_stitching
 
 dir_name = "./parrington"
 
-tmp_dir = "./tmp"
-if(not os.path.exists(tmp_dir)): 
-	os.mkdir(tmp_dir)
+# tmp_dir = "./tmp"
+# if(not os.path.exists(tmp_dir)): 
+# 	os.mkdir(tmp_dir)
 
 # Create a list of input images
 images = read_files(dir_name)
@@ -29,14 +29,11 @@ for i in tqdm(range(len(images))):
     warp_images.append(cylinder_warp(images[i], focals[i]))
     # cv2.imwrite(tmp_dir + '/warp'+str(i)+'.png', warp_images[i])
 
-
-print('Feature Detection & Feature Description')
+print('\nFeature Detection & Feature Description')
 image_corners = []
 R = []
 image_features = []
 descriptions = []
-print(range(len(warp_images) ))
-
 for i in tqdm(range(len(warp_images))):
     corner, r, dx, dy, dx2, dy2, features = harris_corner_detector(warp_images[i], ksize=3, k=0.04, threshold=0.01)
     m, theta, theta_bin = assign_orientation(dx, dy, dx2, dy2)
@@ -54,14 +51,14 @@ for i in tqdm(range(len(warp_images))):
     R.append(r)
     # cv2.imwrite(tmp_dir + '/harris'+str(i)+'.png', image_corners[i])
 
+print("\nFeature Matching & Image Stitching")
 drift  = 0
-print("Feature Matching")
-for i in tqdm((range(len(warp_images)-1 ))):
+for i in tqdm((range(len(warp_images) - 1))):
     #print(i)
     img1_des = descriptions[i]
-    img2_des = descriptions[i + 1]
+    img2_des = descriptions[i+1]
     img1_fea = image_features[i]
-    img2_fea = image_features[i + 1]
+    img2_fea = image_features[i+1]
     shift = feature_matching(img1_des, img2_des, img1_fea, img2_fea)
 
     if i == 0:
