@@ -5,7 +5,7 @@ import argparse
 import os
 
 from utils import read_files, get_focals, plot_orientation, plot_features
-from dection import harris_corner_detector
+from detection import harris_corner_detector
 from cylindrical import cylinder_warp
 from description import assign_orientation, feature_description
 from matching import feature_matching
@@ -54,6 +54,7 @@ for i in tqdm(range(len(warp_images))):
     R.append(r)
     # cv2.imwrite(tmp_dir + '/harris'+str(i)+'.png', image_corners[i])
 
+drift  = 0
 print("Feature Matching")
 for i in tqdm((range(len(warp_images)-1 ))):
     #print(i)
@@ -68,6 +69,23 @@ for i in tqdm((range(len(warp_images)-1 ))):
     else:
         result, h = image_stitching(result, warp_images[i+1], shift, h, i)
 
-    cv2.imwrite("./result.png", result)
+    drift += shift[0] * np.sign(shift[1])
 
+cv2.imwrite("./result_panorama.png", result)
 
+# Calculate the new height of the image
+new_height = result.shape[0] - abs(drift)
+
+p1 = np.float32([[0, 0], [result.shape[1], drift], [result.shape[1], result.shape[0]]])
+p2 = np.float32([[0, 0], [result.shape[1], 0], [result.shape[1], result.shape[0] - drift]])
+
+# Define the transformation matrix
+M = cv2.getAffineTransform(p1, p2)
+
+# Apply the transformation to the image
+if drift > 0:
+    new_img = cv2.warpAffine(result, M, (result.shape[1], new_height))
+else:
+    new_img = cv2.warpAffine(result, M, (result.shape[1], new_height), dst=np.zeros_like(result))
+
+cv2.imwrite("./result.png", new_img)

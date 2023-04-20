@@ -57,9 +57,4 @@ def image_stitching(right_img, left_img, shift, shift_last_h, i):
         shift_last_hh = dh + shift_last_h
 
     return result, shift_last_hh
-
-
-    
-
-
     
