@@ -9,6 +9,7 @@ from FeatureDection import harris_corner_detector
 from Cylindrical import cylinder_warp
 from feature_description import assign_orientation, feature_description
 from feature_matching import feature_matching
+from stitching import image_stitching
 
 dir_name = "./parrington"
 
@@ -34,6 +35,8 @@ image_corners = []
 R = []
 image_features = []
 descriptions = []
+print(range(len(warp_images) ))
+
 for i in tqdm(range(len(warp_images))):
     corner, r, dx, dy, dx2, dy2, features = harris_corner_detector(warp_images[i], ksize=3, k=0.04, threshold=0.01)
     m, theta, theta_bin = assign_orientation(dx, dy, dx2, dy2)
@@ -52,9 +55,19 @@ for i in tqdm(range(len(warp_images))):
     # cv2.imwrite(tmp_dir + '/harris'+str(i)+'.png', image_corners[i])
 
 print("Feature Matching")
-for i in tqdm((range(len(warp_images) - 1))):
+for i in tqdm((range(len(warp_images)-1 ))):
+    #print(i)
     img1_des = descriptions[i]
     img2_des = descriptions[i + 1]
     img1_fea = image_features[i]
     img2_fea = image_features[i + 1]
-    print(feature_matching(img1_des, img2_des, img1_fea, img2_fea))
+    shift = feature_matching(img1_des, img2_des, img1_fea, img2_fea)
+
+    if i == 0:
+        result, h = image_stitching(warp_images[i], warp_images[i+1], shift, 0, i)
+    else:
+        result, h = image_stitching(result, warp_images[i+1], shift, h, i)
+
+    cv2.imwrite("./result.png", result)
+
+
