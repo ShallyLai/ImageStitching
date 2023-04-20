@@ -5,10 +5,10 @@ import argparse
 import os
 
 from utils import read_files, get_focals, plot_orientation, plot_features
-from FeatureDection import harris_corner_detector
-from Cylindrical import cylinder_warp
-from feature_description import assign_orientation, feature_description
-from feature_matching import feature_matching
+from dection import harris_corner_detector
+from cylindrical import cylinder_warp
+from description import assign_orientation, feature_description
+from matching import feature_matching
 from stitching import image_stitching
 
 dir_name = "./parrington"
