@@ -11,7 +11,6 @@ from description import assign_orientation, feature_description
 from matching import feature_matching
 from stitching import image_stitching
 
-#dir_name = "./parrington"
 dir_name = "./data/DaAn_1"
 
 # tmp_dir = "./tmp"
@@ -20,7 +19,7 @@ dir_name = "./data/DaAn_1"
 
 opt_dir = "./output"
 if(not os.path.exists(opt_dir)): 
-  os.mkdir(opt_dir)
+    os.mkdir(opt_dir)
 
 # Create a list of input images
 images = read_files(dir_name)

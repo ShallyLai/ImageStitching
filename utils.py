@@ -45,7 +45,7 @@ def plot_orientation(dx, dy, m, theta):
     ax[1,1].imshow(theta, cmap='hsv')
     ax[1,1].axis('off')
     
-    fig.savefig('orientation.png')
+    fig.savefig('./output/orientation.png')
 
 # Plot features
 def plot_features(im, R, features, corner):
@@ -68,5 +68,5 @@ def plot_features(im, R, features, corner):
     ax[1, 1].set_title('Corners')
     ax[1, 1].imshow(corner, cmap='gist_gray')
     
-    plt.savefig('features.png')
+    plt.savefig('./output/features.png')
 
