@@ -18,6 +18,10 @@ dir_name = "./data/DaAn_1"
 # if(not os.path.exists(tmp_dir)): 
 # 	os.mkdir(tmp_dir)
 
+opt_dir = "./output"
+if(not os.path.exists(opt_dir)): 
+  os.mkdir(opt_dir)
+
 # Create a list of input images
 images = read_files(dir_name)
 
@@ -69,7 +73,7 @@ for i in tqdm((range(len(warp_images) - 1))):
 
     drift += shift[0] * np.sign(shift[1])
 
-cv2.imwrite("./result_panorama.png", result)
+cv2.imwrite(opt_dir + "/result_panorama.png", result)
 
 # Calculate the new height of the image
 new_height = result.shape[0] - abs(drift)
@@ -86,4 +90,4 @@ if drift > 0:
 else:
     new_img = cv2.warpAffine(result, M, (result.shape[1], new_height), dst=np.zeros_like(result))
 
-cv2.imwrite("./result.png", new_img)
+cv2.imwrite(opt_dir + "/result.png", new_img)
