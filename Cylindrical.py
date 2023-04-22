@@ -15,6 +15,8 @@ def cylinder_warp(image, f):
     # Iterate over every pixel in the output image
     for x in range(w):
         for y in range(h):
+            if r == 0:
+                r += 1e-8
             # Calculate the corresponding point in the input image
             theta = (x - cx) / r
             h_coord = (y - cy) / r 
@@ -27,5 +29,7 @@ def cylinder_warp(image, f):
             # Interpolate the pixel value at the corresponding point
             if x_in >= 0 and x_in < w and y_in >= 0 and y_in < h:
                 out[y, x] = cv2.getRectSubPix(image, (1, 1), (x_in, y_in))
+    
+    out = out[:, 10:w-10]
     
     return out

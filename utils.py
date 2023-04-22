@@ -10,8 +10,10 @@ def read_files(dir_name):
     for filename in np.sort(os.listdir(dir_name)):
         if os.path.splitext(filename)[1] in ['.png', '.jpg', '.JPG', '.PNG']: # Only read png or jpg files
             img = cv2.imread(os.path.join(dir_name, filename))
-            if img.shape[0] > 600:
-                img = cv2.resize(img, (img.shape[1] // 4, img.shape[0] // 4))
+            #print(img.shape[0], img.shape[1])
+            if img.shape[1] > 600:
+                rate = img.shape[1]/600
+                img = cv2.resize(img, (int(img.shape[1] / rate), int(img.shape[0] / rate)))
             images.append(img)
     return images
 

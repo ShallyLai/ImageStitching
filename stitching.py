@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import os
 
 def image_stitching(right_img, left_img, shift, shift_last_h, i):
     #move left img to align right img
@@ -50,12 +51,12 @@ def image_stitching(right_img, left_img, shift, shift_last_h, i):
     result[:, :left_position, :] = result_left[:, :left_position, :]
     result[:, right_position:, :] = result_right[:, right_position:, :]
 
-    # tmp_dir = "./test_stitch"
-    # if(not os.path.exists(tmp_dir)): 
-    #   os.mkdir(tmp_dir)
+    tmp_dir = "./test_stitch"
+    if(not os.path.exists(tmp_dir)): 
+        os.mkdir(tmp_dir)
 
-    # cv2.imwrite(tmp_dir + "/result_l" + str(i) + ".png", result_left)
-    # cv2.imwrite(tmp_dir + "/result_r" + str(i) + ".png", result_right)
+    cv2.imwrite(tmp_dir + "/result_l" + str(i) + ".png", result_left)
+    cv2.imwrite(tmp_dir + "/result_r" + str(i) + ".png", result_right)
 
     for i in range( left_position, right_position):
         #result[:, i, :] = (result_left[:, i, :] + result_right[:, i, :]) / 2
