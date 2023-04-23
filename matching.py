@@ -16,7 +16,7 @@ def ransac(matches, k=4000, t=3):
         if inliers > inlier_max:
             inlier_max = inliers
             best_shift = shift
-    print( np.min(errs), np.max(errs) ) 
+    #print( np.min(errs), np.max(errs) ) 
     return best_shift
        
 

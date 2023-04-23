@@ -2,7 +2,9 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from options import args
 
+opt_dir = args.out_dir
 
 # Load input images
 def read_files(dir_name):
@@ -19,7 +21,8 @@ def read_files(dir_name):
 # A measure of the distance between the camera lens and the image sensor
 def get_focals(dir_name):
     focals = []
-    with open(os.path.join(dir_name, 'pano.txt')) as f:
+    pano_file = args.pano_file
+    with open(os.path.join(dir_name, pano_file)) as f:
         all = f.readlines()
         for i in range(len(all)):  
             if(i != 0 and all[i - 1] == '\n' and all[i + 1] == '\n'):
@@ -45,7 +48,7 @@ def plot_orientation(dx, dy, m, theta):
     ax[1,1].imshow(theta, cmap='hsv')
     ax[1,1].axis('off')
     
-    fig.savefig('./output/orientation.png')
+    fig.savefig(  os.path.join(opt_dir, 'orientation.png') )
 
 # Plot features
 def plot_features(im, R, features, corner):
@@ -55,18 +58,22 @@ def plot_features(im, R, features, corner):
     for i in range(len(features)):
         cv2.circle(feature_points, (features[i][1], features[i][0]), radius=1, color=[255, 0, 0], thickness=1, lineType=1) 
         
-    fig, ax = plt.subplots(2, 2, figsize=(15, 15))
-    ax[0, 0].set_title('Original')
-    ax[0, 0].imshow(im)
+    fig, ax = plt.subplots(1, 3, figsize=(15, 8))
+    ax[0].set_title('Original')
+    ax[0].imshow(im)
+    ax[0].axis('off')
 
-    ax[0, 1].set_title('Feature Points')
-    ax[0, 1].imshow(feature_points); 
+    ax[1].set_title('Feature Points')
+    ax[1].imshow(feature_points)
+    ax[1].axis('off')
 
-    ax[1, 0].set_title('R')
-    ax[1, 0].imshow(np.log(R), cmap='jet')
+    ax[2].set_title('R')
+    ax[2].imshow(np.log(R), cmap='jet')
+    ax[2].set_yticklabels([])
+    ax[2].set_xticklabels([])
 
-    ax[1, 1].set_title('Corners')
-    ax[1, 1].imshow(corner, cmap='gist_gray')
+    # ax[1, 1].set_title('Corners')
+    # ax[1, 1].imshow(corner, cmap='gist_gray')
     
-    plt.savefig('./output/features.png')
+    plt.savefig( os.path.join(opt_dir, 'features.png') )
 
