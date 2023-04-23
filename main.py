@@ -12,15 +12,12 @@ from matching import feature_matching
 from stitching import image_stitching
 
 
-#dir_name = "./data/DaAn_1"
 dir_name = args.src_dir
-
 
 # tmp_dir = "./tmp"
 # if(not os.path.exists(tmp_dir)): 
 # 	os.mkdir(tmp_dir)
 
-#opt_dir = "./output"
 opt_dir = args.out_dir
 if(not os.path.exists(opt_dir)): 
     os.mkdir(opt_dir)
