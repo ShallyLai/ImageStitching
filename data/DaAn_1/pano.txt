@@ -11,7 +11,6 @@ C:\Users\User\Desktop\DaAn_1\IMG_0487.jpg
 
 845.597
 
-
 C:\Users\User\Desktop\DaAn_1\IMG_0489.jpg
 4032 3024
 
@@ -24,7 +23,6 @@ C:\Users\User\Desktop\DaAn_1\IMG_0489.jpg
 -0.886436 0.0112815 0.462714 
 
 849.297
-
 
 C:\Users\User\Desktop\DaAn_1\IMG_0491.jpg
 4032 3024
@@ -39,7 +37,6 @@ C:\Users\User\Desktop\DaAn_1\IMG_0491.jpg
 
 854.643
 
-
 C:\Users\User\Desktop\DaAn_1\IMG_0493.jpg
 4032 3024
 
@@ -53,7 +50,6 @@ C:\Users\User\Desktop\DaAn_1\IMG_0493.jpg
 
 860.373
 
-
 C:\Users\User\Desktop\DaAn_1\IMG_0495.jpg
 4032 3024
 
@@ -66,17 +62,4 @@ C:\Users\User\Desktop\DaAn_1\IMG_0495.jpg
 -0.527013 0.0683842 -0.847101 
 
 863.196
-
-C:\Users\User\Desktop\DaAn_1\IMG_0496.jpg
-4032 3024
-
-4 0 1511.5 
-0 4 2015.5 
-0 0 1 
-
-0.934832 0.0759187 -0.346879 
-0.046295 -0.994597 -0.0929156 
--0.352059 0.0708018 -0.933296 
-
-865.987
 

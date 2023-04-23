@@ -30,6 +30,6 @@ def cylinder_warp(image, f):
             if x_in >= 0 and x_in < w and y_in >= 0 and y_in < h:
                 out[y, x] = cv2.getRectSubPix(image, (1, 1), (x_in, y_in))
     
-    out = out[:, 10:w-10]
+    out = out[:, 5:w-5]
     
     return out
