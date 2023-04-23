@@ -1,18 +1,22 @@
 import numpy as np
 from scipy.spatial import distance
 
-def ransac(matches, k=3000, t=3):
+def ransac(matches, k=4000, t=3):
     inlier_max = 0
     best_shift = []
+    errs = []
     matches = np.array(matches)
     for i in range(k):
         sample_i = np.random.randint(0, len(matches)-1)
         shift = matches[sample_i][1] - matches[sample_i][0] #right-left
-        d = matches[:, 1] - ( matches[:, 0] + shift )  
+        d = np.abs( matches[:, 0] - matches[:, 1] + shift )
+        err = np.sum( np.sign(np.sum(d, 1)))
+        errs += [err]
         inliers = np.sum( np.sqrt(np.sum(d**2, 1)) < t )
         if inliers > inlier_max:
             inlier_max = inliers
             best_shift = shift
+    print( np.min(errs), np.max(errs) ) 
     return best_shift
        
 

@@ -11,7 +11,7 @@ from description import assign_orientation, feature_description
 from matching import feature_matching
 from stitching import image_stitching
 
-dir_name = "./data/2"
+dir_name = "./data/DaAn_1"
 
 # tmp_dir = "./tmp"
 # if(not os.path.exists(tmp_dir)): 
