@@ -60,7 +60,7 @@ def plot_features(im, R, features, corner):
         cv2.circle(feature_points, (features[i][1], features[i][0]), radius=1, color=[255, 0, 0], thickness=1, lineType=1) 
         
     fig, ax = plt.subplots(1, 3, figsize=(10, 5))
-    ax[0].set_title('Original')
+    ax[0].set_title('Cylinder')
     ax[0].imshow(im)
     ax[0].axis('off')
 

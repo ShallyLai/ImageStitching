@@ -58,9 +58,9 @@ def image_stitching(right_img, left_img, shift, shift_last_h, i):
     # cv2.imwrite(tmp_dir + "/result_l" + str(i) + ".png", result_left)
     # cv2.imwrite(tmp_dir + "/result_r" + str(i) + ".png", result_right)
 
-    for i in range( left_position, right_position):
-        #result[:, i, :] = (result_left[:, i, :] + result_right[:, i, :]) / 2
-        result[:, i, :] = (result_left[:, i, :] * (right_position-i) + result_right[:, i, :] * (i-left_position)) / (right_position - left_position)
+    for j in range( left_position, right_position):
+        #result[:, j, :] = (result_left[:, j, :] + result_right[:, j, :]) / 2
+        result[:, j, :] = (result_left[:, j, :] * (right_position-j) + result_right[:, j, :] * (j-left_position)) / (right_position - left_position)
 
     if dh + shift_last_h < 0:
         shift_last_hh = 0

@@ -59,7 +59,6 @@ for i in tqdm(range(len(warp_images))):
 print("\nFeature Matching & Image Stitching")
 drift  = 0
 for i in tqdm((range(len(warp_images) - 1))):
-    #print(i)
     img1_des = descriptions[i]
     img2_des = descriptions[i+1]
     img1_fea = image_features[i]
@@ -77,7 +76,7 @@ for i in tqdm((range(len(warp_images) - 1))):
 
     drift += shift[0] * np.sign(shift[1])
 
-cv2.imwrite( os.path.join(opt_dir, 'result_panorama.png'), result)
+cv2.imwrite(os.path.join(opt_dir, 'result_panorama.png'), result)
 
 # Calculate the new height of the image
 new_height = result.shape[0] - abs(drift)
@@ -95,4 +94,4 @@ else:
     new_img = cv2.warpAffine(result, M, (result.shape[1], new_height), dst=np.zeros_like(result))
 
 new_img = new_img[10:new_img.shape[0]-10, 5:new_img.shape[1]-5]   
-cv2.imwrite( os.path.join(opt_dir, 'result.png'), new_img)
+cv2.imwrite(os.path.join(opt_dir, 'result.png'), new_img)

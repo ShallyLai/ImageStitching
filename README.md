@@ -33,7 +33,7 @@ python3 main.py --src_dir ./data/DaAn
 ![daanpark](./sample_outputs/result_daan.png)
 
 ```
-python3 main.py --src_dir ./data/trees1
+python3 main.py --src_dir ./data/trees
 ```
 ![trees](./sample_outputs/result_trees.png)
 
