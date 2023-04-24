@@ -43,7 +43,7 @@ for i in tqdm(range(len(warp_images))):
     corner, r, dx, dy, dx2, dy2, features = harris_corner_detector(warp_images[i], ksize=3, k=0.04, threshold=args.t)
     
     # Use descriptor in SIFT
-    if args.sift == True: 
+    if args.nosift == False: 
         m, theta, theta_bin = assign_orientation(dx, dy, dx2, dy2)
 
         # Plot features and orientation

@@ -12,8 +12,7 @@ parser.add_argument('--plot', action='store_true', help = 'plot features and ori
 parser.add_argument('--no-plot', dest='plot', action='store_false', help = "don't plot features and orientation.")
 parser.set_defaults(plot=True)
 
-parser.add_argument('--sift', action='store_true', help = 'use the descriptor in SIFT algorithm.')
-parser.add_argument('--no-sift', dest='sift', action='store_false', help = "use the intensities of feature's spatial neightbors as descriptor.")
+parser.add_argument('--nosift', action='store_true', help = "use the intensities of feature's spatial neightbors as descriptor.")
 parser.set_defaults(plot=True)
 
 args = parser.parse_args()
