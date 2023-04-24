@@ -90,4 +90,5 @@ if drift > 0:
 else:
     new_img = cv2.warpAffine(result, M, (result.shape[1], new_height), dst=np.zeros_like(result))
 
+new_img = new_img[10:new_img.shape[0]-10, 5:new_img.shape[1]-5]   
 cv2.imwrite( os.path.join(opt_dir, 'result.png'), new_img)

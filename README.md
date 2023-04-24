@@ -1,21 +1,38 @@
 # Image Stitching
+Image stitching is a technique to combine a set of images into a larger image, and one of its popular applications is the creation of panoramas. 
+In this project, we implemented a feature-based method of image stitching, there are basically five components, feature detection, feature matching, image matching, bundle adjustment and blending.
 
-#### Cylinder Warping
-We took an input image and a focal length as arguments and performed cylinder warping on the input image. The output is a new image that has undergone a transformation in which the original image is projected onto a cylindrical surface. 
+## Usage
+To run this project, you'll need to provide the input images and a txt file that records all focal lengths of images, which can be obtained using the old 32-bit Windows version of [autostitch](http://matthewalunbrown.com/autostitch/autostitch.html)
+```
+[input_directory]/
+├──[image1]
+├──[image2]
+├──...
+└──pano.txt
+```
+And then run
+```
+python3 main.py --src_dic [input_directory]
+```
 
-The code iterates over each pixel in the output image, calculates the corresponding point in the input image, and interpolates the pixel value at that point. The resulting output image has corrected distortion, and the image's visual quality is enhanced.
+## Advanced Usage
+```
+python3 main.py --help
+```
 
+## Sample Results 
+```
+python3 main.py --src_dir ./data/parrington
+```
+![parrington](./sample_outputs/result_parrington.png)
 
-#### Feature Detection
-We achieved the Harris Corner Detector algorithm that the instructor mentioned in class. 
+```
+python3 main.py --src_dir ./data/DaAn
+```
+![parrington](./sample_outputs/result_daan.png)
 
-In the function, the image is first converted to grayscale. Then, the image gradients in both the x and y directions are computed. The products of gradients at each pixel are computed using simple arithmetic operations. Next, the sums of products of gradients for each pixel are computed to obtain the Harris Corner Detector response R. Finally, the locations of the detected corners are found by iterating through the image and checking if the response R is greater than the threshold value and is the maximum value in a 5x5 window. The detected corner locations are then returned along with other computed variables.
-
-
-#### Feature Description
-We implemented the feature description method in SIFT algorithm.
-It can be divided into two main steps, the first one is orientation assignment, and the second one is keypoint description.
-
-The orientation assignment refers to assigning a dominant orientation to each keypoint. In this step, the SIFT algorithm computes gradient magnitude and orientation histograms in the image region surrounding the keypoint, and selects the orientation with the highest histogram peak as the keypoint's dominant orientation.
-
-The feature description refers to converting the image region surrounding each keypoint into a vector that describes the keypoint's features. In this step, the SIFT algorithm divides the image region surrounding the keypoint into a number of subregions, computes the gradient magnitude and orientation for each subregion, and combines this information into a vector. These vectors are then combined into a SIFT feature vector that represents the keypoint. This feature vector is invariant to scale and rotation, and can be used for image matching.
+```
+python3 main.py --src_dir ./data/trees1
+```
+![parrington](./sample_outputs/result_trees.png)
