@@ -6,22 +6,22 @@ def ransac(matches, n=1, k=2000, t=3):
 
     inlier_max = 0
     best_shift = []
-    shifts = []
-    errs = []
+    
     matches = np.array(matches)
     for i in range(k):
         shift =  matches[i][1] - matches[i][0]
-
         d = np.abs( matches[:, 0] - matches[:, 1] + shift )
-       
-        inliers = np.sum( np.sqrt(np.sum(d**2, 1)) < t )
+        d = np.sqrt(np.sum(d**2, 1))
+        inliers = np.sum( d < t )
+        inlier_index = np.where( d < t )
         if inliers > inlier_max:
             inlier_max = inliers
+            inlier_matches = matches[inlier_index]
             best_shift = shift
 
     #best_shift = np.array(best_shift).astype(int)
     #print(best_shift)
-    return best_shift
+    return best_shift, inlier_matches
        
 
 def feature_matching(d1, d2, f1, f2):
@@ -42,5 +42,5 @@ def feature_matching(d1, d2, f1, f2):
             match  = [f1[i], f2[row[0]]]
             matches.append(match)
     
-    return ransac(matches) 
+    return matches 
 

@@ -30,9 +30,14 @@ python3 main.py --src_dir ./data/parrington
 ```
 python3 main.py --src_dir ./data/DaAn
 ```
-![parrington](./sample_outputs/result_daan.png)
+![daanpark](./sample_outputs/result_daan.png)
 
 ```
 python3 main.py --src_dir ./data/trees1
 ```
-![parrington](./sample_outputs/result_trees.png)
+![trees](./sample_outputs/result_trees.png)
+
+## Visualization
+![features](./visualization/features.png)
+![orientation](./visualization/orientation.png)
+![stitching](./visualization/stitching.png)

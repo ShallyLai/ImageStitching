@@ -31,7 +31,7 @@ def get_focals(dir_name):
 
 # Plot orientation
 def plot_orientation(dx, dy, m, theta):
-    fig, ax = plt.subplots(2, 2, figsize=(10, 10))
+    fig, ax = plt.subplots(2, 2, figsize=(5, 6))
     ax[0,0].set_title('dx')
     ax[0,0].imshow(dx)
     ax[0,0].axis('off')
@@ -48,6 +48,7 @@ def plot_orientation(dx, dy, m, theta):
     ax[1,1].imshow(theta, cmap='hsv')
     ax[1,1].axis('off')
     
+    plt.tight_layout()
     fig.savefig(  os.path.join(opt_dir, 'orientation.png') )
 
 # Plot features
@@ -58,7 +59,7 @@ def plot_features(im, R, features, corner):
     for i in range(len(features)):
         cv2.circle(feature_points, (features[i][1], features[i][0]), radius=1, color=[255, 0, 0], thickness=1, lineType=1) 
         
-    fig, ax = plt.subplots(1, 3, figsize=(15, 8))
+    fig, ax = plt.subplots(1, 3, figsize=(10, 5))
     ax[0].set_title('Original')
     ax[0].imshow(im)
     ax[0].axis('off')
@@ -77,3 +78,36 @@ def plot_features(im, R, features, corner):
     
     plt.savefig( os.path.join(opt_dir, 'features.png') )
 
+# Plot matches
+def plot_stitching(img1, img2, matches, stitch_img):
+    h1, w1, c1 = img1.shape
+    h2, w2, c2 = img2.shape
+    s = 50
+
+    ori_img = np.zeros((max(h1, h2), w1+s+w2, 3), dtype=np.uint8) + 255
+    ori_img[:h1, :w1] = img1
+    ori_img[:h2, w1+s:] = img2
+
+    match_img = np.zeros((max(h1, h2), w1+s+w2, 3), dtype=np.uint8) + 255 
+    match_img[:h1, :w1] = img1
+    match_img[:h2, w1+s:] = img2
+
+    fig, ax = plt.subplots(3, 1, figsize=(5, 8))
+    ax[0].set_title('Original Images')
+    ax[0].imshow(ori_img)
+    ax[0].axis('off')
+
+    ax[1].set_title('Inlier Matches')
+    ax[1].imshow(match_img)
+    ax[1].axis('off')
+    for f1, f2 in matches:
+        x = [f1[1], w1+s+f2[1]]
+        y = [f1[0], f2[0]]
+        ax[1].plot(x, y, linewidth=1, marker='o', markersize=2)
+
+    ax[2].set_title('Stitching')
+    ax[2].imshow(stitch_img.astype('uint8'))
+    ax[2].axis('off')
+    
+    plt.tight_layout()
+    plt.savefig( os.path.join(opt_dir, 'stitching.png') )

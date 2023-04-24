@@ -4,11 +4,11 @@ from tqdm import tqdm
 from options import args
 import os
 
-from utils import read_files, get_focals, plot_orientation, plot_features
+from utils import read_files, get_focals, plot_orientation, plot_features, plot_stitching
 from detection import harris_corner_detector
 from cylindrical import cylinder_warp
 from description import assign_orientation, feature_description
-from matching import feature_matching
+from matching import feature_matching, ransac
 from stitching import image_stitching
 
 
@@ -64,10 +64,14 @@ for i in tqdm((range(len(warp_images) - 1))):
     img2_des = descriptions[i+1]
     img1_fea = image_features[i]
     img2_fea = image_features[i+1]
-    shift = feature_matching(img1_des, img2_des, img1_fea, img2_fea)
+    matches = feature_matching(img1_des, img2_des, img1_fea, img2_fea)
+    shift, inlier_matches = ransac(matches)
 
     if i == 0:
         result, h = image_stitching(warp_images[i], warp_images[i+1], shift, 0, i)
+        # Plot stitching
+        if args.plot == True:
+            plot_stitching(warp_images[i], warp_images[i+1], inlier_matches, result)
     else:
         result, h = image_stitching(result, warp_images[i+1], shift, h, i)
 
