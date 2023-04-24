@@ -7,7 +7,7 @@ import os
 from utils import read_files, get_focals, plot_orientation, plot_features, plot_stitching
 from detection import harris_corner_detector
 from cylindrical import cylinder_warp
-from description import assign_orientation, feature_description
+from description import assign_orientation, feature_description, simple_descriptor
 from matching import feature_matching, ransac
 from stitching import image_stitching
 
@@ -41,14 +41,20 @@ image_features = []
 descriptions = []
 for i in tqdm(range(len(warp_images))):
     corner, r, dx, dy, dx2, dy2, features = harris_corner_detector(warp_images[i], ksize=3, k=0.04, threshold=args.t)
-    m, theta, theta_bin = assign_orientation(dx, dy, dx2, dy2)
-
-    # Plot features and orientation
-    if i == 0 and args.plot == True:
-        plot_features(warp_images[i], r, features, corner)
-        plot_orientation(dx, dy, m, theta)
     
-    feature_vectors = feature_description(features, m, theta_bin)
+    # Use descriptor in SIFT
+    if args.sift == True: 
+        m, theta, theta_bin = assign_orientation(dx, dy, dx2, dy2)
+
+        # Plot features and orientation
+        if i == 0 and args.plot == True:
+            plot_features(warp_images[i], r, features, corner)
+            plot_orientation(dx, dy, m, theta)
+    
+        feature_vectors = feature_description(features, m, theta_bin)
+    # Use simplest descriptor
+    else:
+        feature_vectors = simple_descriptor(warp_images[i], features)
     
     descriptions.append(feature_vectors)
     image_features.append(features)

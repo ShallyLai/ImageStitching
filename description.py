@@ -29,7 +29,7 @@ def feature_description(features, m, theta_bin):
     height, width = theta_bin.shape[:2]
     center = (width/2, height/2)
     
-    for h, w in features: # for each vector
+    for h, w in features: # for each feature
         feature_vector = []
         # rotate theta_bin 
         rotate_matrix = cv2.getRotationMatrix2D(center, theta_bin[h,w], 1)
@@ -44,4 +44,10 @@ def feature_description(features, m, theta_bin):
     
     return feature_vectors
 
-        
+
+def simple_descriptor(img, features, kernel=4):
+    feature_vectors = []
+    for h, w in features:
+        neightbors = img[h-kernel:h+kernel, w-kernel:w+kernel]
+        feature_vectors.append(neightbors.flatten())
+    return feature_vectors
